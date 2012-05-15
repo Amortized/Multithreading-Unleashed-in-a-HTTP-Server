@@ -1,0 +1,109 @@
+/* Although the specification says when stop is called do not pick up any 
+   pending tasks; for the Benchmark done pool was modified so that all pending tasks are completed when stop is called 
+   to ensure that slow consumer and fast consumer work on the same number of tasks.
+   
+   Default behaviour of Pool still remains as: Do not pick up pending tasks on stop */
+
+***************Normal Pool**************
+
+1. First Run
+Fast Consumer
+-- Speed up as pool size increases -- 
+No of threads:1 0.000172
+No of threads:2 1.1686
+No of threads:3 1.30348
+No of threads:4 1.36641
+No of threads:5 0.879888
+No of threads:6 0.834921
+No of threads:7 2.27376
+No of threads:8 0.996656
+
+Slow Consumer:	
+--Speed up as Pool size increases--
+No of threads:1 0.220294
+No of threads:2 2.97645
+No of threads:3 1.16822
+No of threads:4 1.10891
+No of threads:5 1.01712
+No of threads:6 1.11932
+No of threads:7 1.01533
+No of threads:8 1.00596
+
+
+Fast Consumer
+-- Speed up as Pool Size increases --
+No of threads:1 0.000234
+No of threads:2 0.867521
+No of threads:3 1.00493
+No of threads:4 1.30392
+No of threads:5 0.954887
+No of threads:6 1.82283
+No of threads:7 0.987041
+No of threads:8 1.05689
+Slow Consumer:	
+-- Speed up as Pool size increases --
+No of threads:1 0.215339
+No of threads:2 2.92877
+No of threads:3 1.21526
+No of threads:4 1.28548
+No of threads:5 0.821749
+No of threads:6 1.27435
+No of threads:7 0.998539
+No of threads:8 1.00057
+
+
+Observation: Increase in number of threads fastens the slow consumer for Normal Pool. The speed up is prominent in the initial increase of the number of threads.
+
+
+*******************Fast Pool***********
+
+Run 1
+Fast Consumer:
+-- Speed up as pool size increases--
+No of threads:1 6.00034
+No of threads:2 1.00003
+No of threads:3 0.999986
+No of threads:4 1.00001
+No of threads:5 1.00001
+No of threads:6 1.00002
+No of threads:7 1.00001
+No of threads:8 0.999944
+
+Slow Consumer:
+-- Speed up as Pool size increases --
+No of threads:1 20.0001
+No of threads:2 1.00001
+No of threads:3 1
+No of threads:4 0.999996
+No of threads:5 1.00001
+No of threads:6 0.999992
+No of threads:7 1
+No of threads:8 0.999993
+
+
+Run 2
+Fast Consumer:
+-- Speed up as Pool size increases --
+No of threads:1 6.00026
+No of threads:2 1.00001
+No of threads:3 1.00002
+No of threads:4 0.999995
+No of threads:5 1.00002
+No of threads:6 1
+No of threads:7 1.00002
+No of threads:8 1.00004
+
+Slow Consumer:
+-- Speed up as Pool size increases --
+No of threads:1 20.0003
+No of threads:2 0.999999
+No of threads:3 1
+No of threads:4 0.999996
+No of threads:5 1.00001
+No of threads:6 0.999999
+No of threads:7 1.00001
+No of threads:8 1
+
+Observation: Increase in number of threads fastens the slow consumer for Normal Pool. The speed up is prominent in the initial increase of the number of threads.
+
+

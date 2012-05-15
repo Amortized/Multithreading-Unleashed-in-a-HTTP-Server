@@ -1,0 +1,44 @@
+
+*********** 
+
+
+Description : In every test, the number of connections made to the server are increased. Consider each connection makes
+1000 requests each, the following table shows the time taken in individuals sections. 
+The following components measured  in http_connection.cpp are 
+1. Time taken Establish a Connection 
+2. Time taken to parse a request
+3. Time taken to service the request
+4. Time taken to write the output to clients fd.
+
+
+(Experiment ran on a 4 core machine with 4 threads in the worker pool)
+
+
+No of Clients      Requests(N)      Total Time taken(T)     Requests Served            (Combined Time taken for total no of requests made)
+                                                            per second  (T/N)        | Parse Time |  Connection  |  Service  |  Write            |                                                                                         |            |  Open Time   |  Request  |  Output to socket |
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+1                   1000                     1.938          516                         0.0900816       0.0741199    1.3929e-06      5.30091e-270
+2                   2000                     1.974          1014                        0.241199        0.194118     1.84863e-06     5.30091e-270
+4                   4000                     2.256          1773                        0.473285        0.392084     2.92914e-06     5.30091e-270
+8                   8000                     3.520          2272                        1.39755         1.20025      4.83527e-06     5.30091e-270
+16                  16000                    3.809          4200                        1.62611         1.41041      7.21184e-06     5.30091e-270
+20                  20000                    7.738          2585                        4.90053         4.42061      5.79772e-06     5.30091e-270
+24                  24000                    9.230          2600                        6.20819         5.62085      9.18176e-06     5.30091e-270
+28                  28000                    10.924         2563                        7.30114         6.52487      1.11937e-05     5.30091e-270
+32                  32000                    12.242         2613                        8.53836         7.71697      1.12927e-05     5.30091e-270
+40                  40000                    14.693         2700                        10.578          9.62714      1.36976e-05     5.30091e-270     50                  50000                    15.311         3200                        20.4758        18.6171       2.19528e-05     5.30091e-270
+75                  75000                    28.024         2676                        20.4758        18.6171       2.19528e-05     5.30091e-270
+90                  90000                    39.464         2280                        29.8418        27.2763       2.46011e-05     5.30091e-270     
+100                 100000                   48.917         2044                        36.7886         33.5379      0.000156358     5.30091e-270
+
+
+
+
+
+Observations : The number of requests served per second drops when no of clients and requests are increased above a threshold. 
+Probably, the bottleneck is time taken to establish a connection. As IOService uses socket polling thread for the same and hence it can 
+be one of the contributors to bottleneck. Also a significant amount of time is spent in parsing the request so it also prevents the scaling
+of the server.
+ 
+
+
